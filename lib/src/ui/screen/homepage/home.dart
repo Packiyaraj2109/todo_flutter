@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _todoList.indexWhere((element) => element['checked'] == true) != -1;
     return WillPopScope(
       onWillPop: _onWillPop,
-          child: Scaffold(
+      child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: AppColors.appBackgroundColor,
         appBar: _buildAppBar(),
@@ -73,27 +73,31 @@ class _HomeScreenState extends State<HomeScreen> {
           color: AppColors.appBackgroundColor,
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(top:16),
+              padding: const EdgeInsets.only(top: 16),
               child: Column(
                 children: List.generate(
                   _todoList.length,
                   (index) {
                     Map item = _todoList[index];
                     return Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(10),
                       child: GestureDetector(
                         onTap: () => refresh(item["id"]),
                         child: Container(
                             width: double.infinity,
                             height: 70,
                             decoration: BoxDecoration(
-                              borderRadius: new BorderRadius.circular(10),
-                              color: AppColors.appBackgroundColor,
+                              borderRadius: new BorderRadius.circular(20),
+                              color: AppColors.borderColor,
+                              border: Border.all(
+                                width: 0.5,
+                                color: Color(0xFFa1a1a1),
+                              ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey[900],
-                                  blurRadius: 3.0,
-                                ),
+                                    color: Color(0xFFa1a1a1),
+                                    blurRadius: 0.5,
+                                    offset: Offset(0, 1)),
                               ],
                             ),
                             margin: EdgeInsets.only(left: 8, right: 8),
@@ -105,8 +109,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "   ${item['title']}",
                                     softWrap: false,
                                     style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w900,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                 ),
@@ -285,25 +289,28 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
   Future<bool> _onWillPop() async {
     return (await showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: new Text('Are you sure?'),
-        content: new Text('Do you want to exit an App'),
-        actions: <Widget>[
-          new FlatButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: new Text('No'),
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Are you sure?'),
+            content: new Text('Do you want to exit an App'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                onPressed: () {
+                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                },
+                child: new Text('Yes'),
+              ),
+            ],
           ),
-          new FlatButton(
-            onPressed:(){
-   SystemChannels.platform.invokeMethod('SystemNavigator.pop');},
-            child: new Text('Yes'),
-          ),
-        ],
-      ),
-    )) ?? false;
+        )) ??
+        false;
   }
 
   Future<void> checkedListDelete() async {
