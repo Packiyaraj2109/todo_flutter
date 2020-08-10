@@ -191,7 +191,7 @@ class _SigninState extends State<Signin> {
               ),
               child:ClipRRect(
                 borderRadius: BorderRadius.circular(40),
-                child:AppImages.appLogo(height: 80, width: 80),
+              child:AppImages.appLogo(height: 80, width: 80),
                 ),
             ),
             Container(

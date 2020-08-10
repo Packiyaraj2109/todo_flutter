@@ -164,7 +164,7 @@ class _TodoViewState extends State<TodoView> {
         ),
       ),
       centerTitle: true,
-      title: new Text('${title}'),
+      title: new Text('$title'),
       actions: <Widget>[
         IconButton(
           icon: Icon(
