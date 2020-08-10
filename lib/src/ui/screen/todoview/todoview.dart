@@ -20,7 +20,6 @@ class _TodoViewState extends State<TodoView> {
   List decodeTodoList;
   int index;
   String title;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
     todofetch();
@@ -44,7 +43,6 @@ class _TodoViewState extends State<TodoView> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       backgroundColor: AppColors.appBackgroundColor,
       appBar: _buildAppBar(),
       body: Container(
@@ -233,8 +231,6 @@ class _TodoViewState extends State<TodoView> {
   Future<void> editTodo() async {
     String title = _titleController.text;
     String desc = _descController.text;
-    debugPrint('title $desc');
-    debugPrint('title $title');
     decodeTodoList[index]['title'] = title;
     decodeTodoList[index]['desc'] = desc;
     setStorage(decodeTodoList);

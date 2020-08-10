@@ -183,16 +183,19 @@ class _SigninState extends State<Signin> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(80),
-              ),
-              child:ClipRRect(
-                borderRadius: BorderRadius.circular(40),
-              child:AppImages.appLogo(height: 80, width: 80),
+            Padding(
+              padding: const EdgeInsets.only(top:16.0),
+              child: Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(80),
                 ),
+                child:ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                child:AppImages.appLogo(height: 80, width: 80),
+                  ),
+              ),
             ),
             Container(
               alignment: Alignment.bottomRight,
@@ -250,6 +253,7 @@ class _SigninState extends State<Signin> {
   }
 
   _showScaffold(String message) {
+    _scaffoldKey.currentState.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         content: Text(message),

@@ -52,6 +52,16 @@ ThemeData lightTheme() {
         fontSize: 13,
         fontWeight: FontWeight.bold,
       ),
+      headline5: TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+      headline6: TextStyle(
+        color: Colors.black,
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
       bodyText1: TextStyle(
         fontSize: 13,
         fontWeight: FontWeight.bold,

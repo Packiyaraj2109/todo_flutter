@@ -303,6 +303,7 @@ class _SignupState extends State<Signup> {
   }
 
   _showScaffold(String message) {
+    _scaffoldKey.currentState.removeCurrentSnackBar();
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         content: Text(message),
@@ -318,6 +319,3 @@ class _SignupState extends State<Signup> {
     );
   }
 }
-
-// [11:34 pm, 21/07/2020] Velu: https://online.inlinguabangalore.com/api/login
-// [11:35 pm, 21/07/2020] Velu: {"email_id":"newtest@gmail.com","password":"newtest"}

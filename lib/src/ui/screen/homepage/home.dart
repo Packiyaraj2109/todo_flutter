@@ -68,42 +68,63 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.appBackgroundColor,
         appBar: _buildAppBar(),
         // drawer: _buildDrawer(),
-        body: Container(
-          color: AppColors.appBackgroundColor,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Column(
-                children: List.generate(
-                  _todoList.length,
-                  (index) {
-                    Map item = _todoList[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: GestureDetector(
-                        onTap: () => refresh(item["id"]),
-                        child: Container(
-                            width: double.infinity,
-                            height: 70,
-                            decoration: BoxDecoration(
-                              borderRadius: new BorderRadius.circular(20),
-                              color: AppColors.borderColor,
-                              border: Border.all(
-                                width: 0.5,
-                                color: Color(0xFFa1a1a1),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color(0xFFa1a1a1),
-                                    blurRadius: 0.5,
-                                    offset: Offset(0, 1)),
-                              ],
+        body: _buildBody(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _modalBottomSheet,
+          child: Icon(Icons.add),
+          backgroundColor: AppColors.bottomsheet,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+    );
+  }
+
+  _buildBody() {
+    if (_todoList.length == 0) {
+      return Opacity(
+          opacity: 0.5,
+          child: Center(
+              child: Text("No Tasks To show",
+                  style: Theme.of(context).textTheme.headline6)));
+    } else {
+      return Container(
+        color: AppColors.appBackgroundColor,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Column(
+              children: List.generate(
+                _todoList.length,
+                (index) {
+                  Map item = _todoList[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: GestureDetector(
+                      onTap: () => refresh(item["id"]),
+                      child: Container(
+                          width: double.infinity,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: new BorderRadius.circular(20),
+                            color: AppColors.borderColor,
+                            border: Border.all(
+                              width: 0.5,
+                              color: Color(0xFFa1a1a1),
                             ),
-                            margin: EdgeInsets.only(left: 8, right: 8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Expanded(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0xFFa1a1a1),
+                                  blurRadius: 0.5,
+                                  offset: Offset(0, 1)),
+                            ],
+                          ),
+                          margin: EdgeInsets.only(left: 8, right: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
                                   child: Text(
                                     "   ${item['title']}",
                                     softWrap: false,
@@ -113,36 +134,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ),
-                                Checkbox(
-                                  value: item['checked'] ?? false,
-                                  onChanged: (bool newvalue) {
-                                    _todoList[index]['checked'] = newvalue;
-                                    setState(() {
-                                      _todoList = _todoList;
-                                    });
-                                  },
-                                  activeColor: Colors.deepOrangeAccent,
-                                  checkColor: AppColors.iconColor,
-                                ),
-                              ],
-                            )),
-                      ),
-                    );
-                  },
-                ),
+                              ),
+                              Checkbox(
+                                value: item['checked'] ?? false,
+                                onChanged: (bool newvalue) {
+                                  _todoList[index]['checked'] = newvalue;
+                                  setState(() {
+                                    _todoList = _todoList;
+                                  });
+                                },
+                                activeColor: Colors.deepOrangeAccent,
+                                checkColor: AppColors.iconColor,
+                              ),
+                            ],
+                          )),
+                    ),
+                  );
+                },
               ),
             ),
           ),
         ),
-
-        floatingActionButton: FloatingActionButton(
-          onPressed: _modalBottomSheet,
-          child: Icon(Icons.add),
-          backgroundColor: AppColors.bottomsheet,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),
-    );
+      );
+    }
   }
 
   AppBar _buildAppBar() {
@@ -188,7 +202,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: WrapAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text("New Task",
+                        style: Theme.of(context).textTheme.headline5),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16),
                     child: Theme(
                       data: new ThemeData(
                         primaryColor: AppColors.themeColor,
@@ -212,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(16),
                     child: Theme(
                       data: new ThemeData(
                         primaryColor: AppColors.themeColor,
@@ -327,7 +346,7 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(AppTextConstant.LOGOUT),
-          content: Text('Are you sure to Exit from this User: "${username}"?'),
+          content: Text('"${username}"Are you sure to Logout?'),
           actions: <Widget>[
             FlatButton(
               child: const Text(AppTextConstant.LOGOUT),
